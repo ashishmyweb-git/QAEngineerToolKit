@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QA Engineer Toolkit | Prompt Library</title>
+    <style>
+        /* --- CSS Styles --- */
+        :root {
+            --bg-dark: #09090b;
+            --bg-card: rgba(30, 41, 59, 0.5);
+            --bg-card-hover: rgba(30, 41, 59, 0.8);
+            
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+            
+            --accent-primary: #3b82f6;
+            --accent-secondary: #10b981;
+            --accent-tertiary: #f43f5e;
+            
+            --border-color: rgba(255, 255, 255, 0.1);
+            --border-highlight: rgba(255, 255, 255, 0.3);
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-dark);
+            background-image: radial-gradient(circle at top center, rgba(59, 130, 246, 0.1), transparent 40%);
+            color: var(--text-primary);
+            margin: 0;
+            padding: 2rem 1rem;
+            line-height: 1.5;
+            min-height: 100vh;
+        }
+
+        h1, h2, h3, h4 { margin: 0; font-weight: 700; letter-spacing: -0.02em; }
+
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #334155; border-radius: 4px; }
+
+        /* --- Header --- */
+        .header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .header h1 {
+            font-size: 3rem;
+            background: linear-gradient(to right, #fff, #94a3b8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 0.5rem;
+        }
+
+        .header p { color: var(--text-secondary); font-size: 1.2rem; }
+
+        /* --- How It Works --- */
+        .how-it-works {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            gap: 1.5rem;
+            margin-bottom: 4rem;
+            max-width: 1000px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .step-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            padding: 1.5rem;
+            border-radius: 12px;
+            text-align: center;
+            flex: 1;
+            min-width: 150px;
+            transition: transform 0.2s;
+        }
+
+        .step-card:hover { transform: translateY(-3px); border-color: var(--border-highlight); }
+
+        .step-icon {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        .step-title {
+            font-size: 1rem;
+            color: var(--text-primary);
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .step-desc { font-size: 0.85rem; color: var(--text-secondary); }
+
+        /* --- Main Content --- */
+        .main-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            color: var(--text-primary);
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .section-icon { color: var(--accent-primary); }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 4rem;
+        }
+
+        /* --- Card Styles --- */
+        .card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+            transition: all 0.2s ease;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card:hover {
+            transform: translateY(-4px);
+            border-color: var(--border-highlight);
+            background: var(--bg-card-hover);
+            box-shadow: 0 10px 30px -10px rgba(0,0,0,0.5);
+        }
+
+        .card-icon { font-size: 2rem; margin-bottom: 1rem; }
+        .card-title { font-size: 1.1rem; font-weight: 600; margin-bottom: 0.5rem; color: #fff; }
+        .card-desc { font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 1.5rem; flex-grow: 1; line-height: 1.5; }
+
+        .card-actions {
+            display: flex;
+            gap: 0.75rem;
+            margin-top: auto;
+        }
+
+        .card-btn {
+            flex: 1;
+            padding: 0.6rem;
+            font-size: 0.9rem;
+            border-radius: 6px;
+            border: 1px solid var(--border-color);
+            background: rgba(255,255,255,0.03);
+            color: var(--text-primary);
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .card-btn:hover { background: rgba(255,255,255,0.1); }
+        .card-btn.primary { background: rgba(59, 130, 246, 0.1); border-color: rgba(59, 130, 246, 0.3); color: #60a5fa; }
+        .card-btn.primary:hover { background: rgba(59, 130, 246, 0.2); }
+
+        /* --- Footer --- */
+        .footer {
+            text-align: center;
+            margin-top: 5rem;
+            padding-top: 3rem;
+            border-top: 1px solid var(--border-color);
+            color: var(--text-secondary);
+        }
+        .footer-icon { font-size: 2rem; margin-bottom: 1rem; display: inline-block; animation: float 3s ease-in-out infinite; }
+        .footer-name { font-weight: 700; color: var(--text-primary); }
+        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-5px); } }
+
+        /* --- Modal --- */
+        .modal-overlay {
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.8); z-index: 1000; justify-content: center; align-items: center;
+            backdrop-filter: blur(4px);
+        }
+        .modal-content {
+            background: #1e293b; width: 90%; max-width: 700px; border-radius: 12px;
+            border: 1px solid var(--border-highlight); padding: 2rem; display: flex; flex-direction: column;
+            box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5);
+        }
+        .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; }
+        .modal-title { font-size: 1.5rem; font-weight: 700; }
+        .modal-close { background: none; border: none; color: var(--text-secondary); font-size: 2rem; cursor: pointer; line-height: 1; }
+        .prompt-box {
+            background: #0f172a; padding: 1.5rem; border-radius: 8px; border: 1px solid var(--border-color);
+            color: #e2e8f0; font-family: monospace; font-size: 0.95rem; white-space: pre-wrap;
+            max-height: 500px; overflow-y: auto; margin-bottom: 1.5rem; line-height: 1.6;
+        }
+        .modal-btn {
+            align-self: flex-end; padding: 0.75rem 1.5rem; background: var(--accent-primary);
+            color: white; border: none; border-radius: 6px; font-weight: 600; cursor: pointer; font-size: 1rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) { .grid { grid-template-columns: 1fr; } .how-it-works { flex-direction: column; } }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <h1>QA Engineer Toolkit</h1>
+        <p>Expert Prompts to accelerate your testing workflow</p>
+    </div>
+
+    <!-- How It Works -->
+    <div class="how-it-works">
+        <div class="step-card">
+            <span class="step-icon">📋</span>
+            <div class="step-title">1. Choose</div>
+            <div class="step-desc">Select your testing task</div>
+        </div>
+        <div class="step-card">
+            <span class="step-icon">🤖</span>
+            <div class="step-title">2. Copy</div>
+            <div class="step-desc">Grab the optimized prompt</div>
+        </div>
+        <div class="step-card">
+            <span class="step-icon">💬</span>
+            <div class="step-title">3. Paste</div>
+            <div class="step-desc">Use with ChatGPT or Claude</div>
+        </div>
+        <div class="step-card">
+            <span class="step-icon">✨</span>
+            <div class="step-title">4. Result</div>
+            <div class="step-desc">Get your test artifacts</div>
+        </div>
+    </div>
+
+    <div class="main-container">
+
+        <!-- Functional Section -->
+        <div id="section-functional" class="section-group">
+            <h2 class="section-title"><span class="section-icon">⚡</span> Functional Testing</h2>
+            <div class="grid">
+                <!-- Happy Path -->
+                <div class="card" onclick="openModal('card-happy')">
+                    <div class="card-icon">🛣️</div>
+                    <div class="card-title">Happy Path Architect</div>
+                    <div class="card-desc">Map out critical user journeys and success states.</div>
+                    <div class="card-actions">
+                        <button class="card-btn primary" onclick="copyCardPrompt('card-happy', this, event)">Copy</button>
+                        <button class="card-btn" onclick="openModal('card-happy'); event.stopPropagation()">View</button>
+                    </div>
+                </div>
+                <!-- Integration -->
+                <div class="card" onclick="openModal('card-integ')">
+                    <div class="card-icon">🔗</div>
+                    <div class="card-title">Integration & E2E</div>
+                    <div class="card-desc">Validate end-to-end data flow across APIs.</div>
+                    <div class="card-actions">
+                        <button class="card-btn primary" onclick="copyCardPrompt('card-integ', this, event)">Copy</button>
+                        <button class="card-btn" onclick="openModal('card-integ'); event.stopPropagation()">View</button>
+                    </div>
+                </div>
+                <!-- Negative Testing -->
+                <div class="card" onclick="openModal('card-neg')">
+                    <div class="card-icon">🛑</div>
+                    <div class="card-title">Negative Scenarios</div>
+                    <div class="card-desc">Generate validation errors and timeout checks.</div>
+                    <div class="card-actions">
+                        <button class="card-btn primary" onclick="copyCardPrompt('card-neg', this, event)">Copy</button>
+                        <button class="card-btn" onclick="openModal('card-neg'); event.stopPropagation()">View</button>
+                    </div>
+                </div>
+                <!-- Edge Case -->
+                <div class="card" onclick="openModal('card-edge')">
+                    <div class="card-icon">💣</div>
+                    <div class="card-title">Edge Case Destructor</div>
+                    <div class="card-desc">Brainstorm boundary values and logical gaps.</div>
+                    <div class="card-actions">
+                        <button class="card-btn primary" onclick="copyCardPrompt('card-edge', this, event)">Copy</button>
+                        <button class="card-btn" onclick="openModal('card-edge'); event.stopPropagation()">View</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Automation Section -->
+        <div id="section-automation" class="section-group">
+            <h2 class="section-title"><span class="section-icon">🤖</span> Automation & Data</h2>
+            <div class="grid">
+                <!-- BDD -->
+                <div class="card" onclick="openModal('card-bdd')">
+                    <div class="card-icon">🥒</div>
+                    <div class="card-title">BDD / Gherkin</div>
+                    <div class="card-desc">Convert requirements into strict Gherkin syntax.</div>
+                    <div class="card-actions">
+                        <button class="card-btn primary" onclick="copyCardPrompt('card-bdd', this, event)">Copy</button>
+                        <button class="card-btn" onclick="openModal('card-bdd'); event.stopPropagation()">View</button>
+                    </div>
+                </div>
+                <!-- Data Matrix -->
+                <div class="card" onclick="openModal('card-data')">
+                    <div class="card-icon">📝</div>
+                    <div class="card-title">Test Data Matrix</div>
+                    <div class="card-desc">Generate validation tables with test data examples.</div>
+                    <div class="card-actions">
+                        <button class="card-btn primary" onclick="copyCardPrompt('card-data', this, event)">Copy</button>
+                        <button class="card-btn" onclick="openModal('card-data'); event.stopPropagation()">View</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- NFR Section -->
+        <div id="section-nfr" class="section-group">
+            <h2 class="section-title"><span class="section-icon">🛡️</span> Non-Functional (NFR)</h2>
+            <div class="grid">
+                <!-- Security -->
+                <div class="card" onclick="openModal('card-sec')">
+                    <div class="card-icon">🔒</div>
+                    <div class="card-title">Security Auditor</div>
+                    <div class="card-desc">Analyze for vulnerabilities like IDOR and XSS.</div>
+                    <div class="card-actions">
+                        <button class="card-btn primary" onclick="copyCardPrompt('card-sec', this, event)">Copy</button>
+                        <button class="card-btn" onclick="openModal('card-sec'); event.stopPropagation()">View</button>
+                    </div>
+                </div>
+                <!-- Performance -->
+                <div class="card" onclick="openModal('card-perf')">
+                    <div class="card-icon">⚡</div>
+                    <div class="card-title">Performance & Load</div>
+                    <div class="card-desc">Identify bottlenecks and define SLAs.</div>
+                    <div class="card-actions">
+                        <button class="card-btn primary" onclick="copyCardPrompt('card-perf', this, event)">Copy</button>
+                        <button class="card-btn" onclick="openModal('card-perf'); event.stopPropagation()">View</button>
+                    </div>
+                </div>
+                <!-- Accessibility -->
+                <div class="card" onclick="openModal('card-a11y')">
+                    <div class="card-icon">♿</div>
+                    <div class="card-title">Accessibility (a11y)</div>
+                    <div class="card-desc">Review against WCAG 2.1 AA standards.</div>
+                    <div class="card-actions">
+                        <button class="card-btn primary" onclick="copyCardPrompt('card-a11y', this, event)">Copy</button>
+                        <button class="card-btn" onclick="openModal('card-a11y'); event.stopPropagation()">View</button>
+                    </div>
+                </div>
+                <!-- Compatibility -->
+                <div class="card" onclick="openModal('card-comp')">
+                    <div class="card-icon">📱</div>
+                    <div class="card-title">Compatibility Matrix</div>
+                    <div class="card-desc">Risk-based list of devices and OS versions.</div>
+                    <div class="card-actions">
+                        <button class="card-btn primary" onclick="copyCardPrompt('card-comp', this, event)">Copy</button>
+                        <button class="card-btn" onclick="openModal('card-comp'); event.stopPropagation()">View</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <footer class="footer">
+        <span class="footer-icon">🚀</span>
+        <p>Built by <span class="footer-name">Ashish Kumar Sankhua</span></p>
+    </footer>
+
+    <!-- Hidden Prompts -->
+    <textarea id="card-happy-prompt" style="display:none;">Act as a Senior QA. For the requirement provided, map out the Critical User Journeys (Happy Paths). Output a table with Step ID, Action, Data, and Expected Result. [PASTE REQ HERE]</textarea>
+    <textarea id="card-integ-prompt" style="display:none;">Act as an Integration Test Engineer. Create an E2E test plan validating data flow between services/APIs based on the requirement. [PASTE REQ HERE]</textarea>
+    <textarea id="card-neg-prompt" style="display:none;">Act as a QA. Generate negative test scenarios focusing on validation errors, timeouts, and invalid data types. [PASTE REQ HERE]</textarea>
+    <textarea id="card-edge-prompt" style="display:none;">Act as a Destructive Tester. Find edge cases, boundary value breaches, and state conflict scenarios for this feature. [PASTE REQ HERE]</textarea>
+    <textarea id="card-bdd-prompt" style="display:none;">Convert this requirement into strict Gherkin (Given/When/Then) scenarios for Happy, Negative, and Edge cases. [PASTE REQ HERE]</textarea>
+    <textarea id="card-data-prompt" style="display:none;">Create a Data Validation Matrix for all fields in this requirement, including valid/invalid examples and error messages. [PASTE REQ HERE]</textarea>
+    <textarea id="card-sec-prompt" style="display:none;">Analyze this for security risks (OWASP Top 10). Suggest tests for IDOR, Injection, and Auth flaws. [PASTE REQ HERE]</textarea>
+    <textarea id="card-perf-prompt" style="display:none;">Create a Performance Test strategy. Identify bottlenecks, suggest SLAs, and define concurrency scenarios. [PASTE REQ HERE]</textarea>
+    <textarea id="card-a11y-prompt" style="display:none;">Audit this feature for WCAG 2.1 AA compliance. Check keyboard nav, screen reader tags, and contrast. [PASTE REQ HERE]</textarea>
+    <textarea id="card-comp-prompt" style="display:none;">Create a Browser/Device Compatibility Matrix based on user demographics and risk. [PASTE REQ HERE]</textarea>
+
+    <!-- Modal -->
+    <div id="modal-overlay" class="modal-overlay" onclick="closeModal(event)">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modal-title" class="modal-title">Prompt</h3>
+                <button class="modal-close" onclick="closeModal(event)">×</button>
+            </div>
+            <div id="modal-prompt-box" class="prompt-box"></div>
+            <button id="copy-btn" class="modal-btn">Copy Prompt</button>
+        </div>
+    </div>
+
+    <script>
+        // Modal Logic
+        const modalOverlay = document.getElementById('modal-overlay');
+        const modalTitle = document.getElementById('modal-title');
+        const modalPromptBox = document.getElementById('modal-prompt-box');
+        const copyBtn = document.getElementById('copy-btn');
+
+        function openModal(cardId) {
+            const prompt = document.getElementById(cardId + '-prompt').value;
+            // Get title from card
+            const title = document.querySelector(`.card[onclick*="${cardId}"] .card-title`).innerText;
+            
+            modalTitle.innerText = title;
+            modalPromptBox.innerText = prompt;
+            modalOverlay.style.display = 'flex';
+        }
+
+        function closeModal(e) {
+            if (e.target === modalOverlay || e.target.classList.contains('modal-close')) {
+                modalOverlay.style.display = 'none';
+            }
+        }
+
+        // Copy Logic
+        function copyCardPrompt(cardId, btn, e) {
+            e.stopPropagation();
+            const text = document.getElementById(cardId + '-prompt').value;
+            copyToClipboard(text, btn);
+        }
+
+        copyBtn.addEventListener('click', () => {
+            copyToClipboard(modalPromptBox.innerText, copyBtn);
+        });
+
+        function copyToClipboard(text, btnElement) {
+            const originalText = btnElement.innerText;
+            
+            // Fallback copy
+            const textArea = document.createElement("textarea");
+            textArea.value = text;
+            textArea.style.position = "fixed"; textArea.style.left = "-9999px";
+            document.body.appendChild(textArea);
+            textArea.focus(); textArea.select();
+            
+            try {
+                document.execCommand('copy');
+                btnElement.innerText = "Copied!";
+                if(btnElement.classList.contains('card-btn')) {
+                    btnElement.style.background = "#fff";
+                    btnElement.style.color = "#000";
+                }
+            } catch (err) { console.error('Copy failed', err); }
+            
+            document.body.removeChild(textArea);
+
+            setTimeout(() => {
+                btnElement.innerText = originalText;
+                btnElement.style.background = "";
+                btnElement.style.color = "";
+            }, 2000);
+        }
+
+        // Mouse hover effect
+        document.querySelectorAll('.card').forEach(card => {
+            card.addEventListener('mousemove', e => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                card.style.setProperty('--x', `${x}px`);
+                card.style.setProperty('--y', `${y}px`);
+            });
+        });
+    </script>
+</body>
+</html>
